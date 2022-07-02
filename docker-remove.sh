@@ -23,6 +23,9 @@ echo $REMOVEIMAGES >>$log
 
 }
 
+
+
+
 docker_cleanup(){
 echo "#####################################################################" >> $log
 echo "Cleaning images" >> $log
@@ -35,6 +38,26 @@ CURRENTSPACE=`docker system df`
 echo "Current Docker Space, after clean up:" >> $log
 echo $CURRENTSPACE >>$log
 }
+docker ps -aq
+# Stop all running containers
+docker stop $(docker ps -aq)
+# Remove all containers
+docker rm $(docker ps -aq)
+# Remove all images
+docker rmi $(docker images -q)
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+sudo apt-get purge -y docker-engine docker docker.io docker-ce docker-ce-cli
+sudo apt-get autoremove -y --purge docker-engine docker docker.io docker-ce  
+sudo rm -rf /var/lib/docker /etc/docker
+sudo rm /etc/apparmor.d/docker
+sudo groupdel docker
+sudo rm -rf /var/run/docker.sock
+dpkg -l | grep -i docker
+
+
 docker_space_before
 docker_find
 docker_cleanup
