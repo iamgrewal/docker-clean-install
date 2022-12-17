@@ -1,5 +1,5 @@
 #!/bin/bash
-#!/bin/bash
+
 ### J Grewal####
 timestamp=$(date +%Y%m%d_%H%M%S)
 log_path="`pwd`"
